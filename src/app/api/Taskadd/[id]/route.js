@@ -1,0 +1,111 @@
+import { Db_connection } from "@/app/libs/Db_connection";
+import { Taskmodel } from "@/app/model/Task_add";
+import { NextResponse } from "next/server";
+import jwt from "jsonwebtoken";
+
+export const GET = async (req, { params }) => {
+  try {
+    await Db_connection();
+
+    const { id } = params;
+
+    const finddata = await Taskmodel.find({ user_id: id });
+
+    if (!finddata || finddata.length === 0) {
+      return NextResponse.json(
+        { message: "No tasks found for this user." },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      { message: "Tasks fetched successfully", data: finddata },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      { error: error.message, message: "Fail to fetch tasks" },
+      { status: 500 }
+    );
+  }
+};
+
+export const DELETE = async (req, { params }) => {
+  try {
+    await Db_connection();
+
+    const { id } = params;
+
+    const finddata = await Taskmodel.findOneAndDelete({ user_id: id });
+
+    if (!finddata || finddata.length === 0) {
+      return NextResponse.json(
+        { message: "No task found with this id." },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      { message: "Task deleted successfully", data: finddata },
+      { status: 200 }
+    );
+  } catch (error) {
+    return NextResponse.json(
+      { error: error.message, message: "Fail to fetch tasks" },
+      { status: 500 }
+    );
+  }
+};
+
+
+
+export const PUT = async (req, { params }) => {
+  try {
+    await Db_connection();
+
+    // ✅ Extract Task ID from URL
+    const { id } = params;
+
+    // ✅ Get Token from Cookies
+    const token = req.cookies().get("authtoken")?.value;
+
+    if (!token) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
+
+    // ✅ Verify Token
+    const decode = jwt.verify(token, "Abdullah");
+
+    // ✅ Get Request Body
+    const { Task_Tittle, Task_description, Task_Satut } = await req.json();
+
+    // ✅ Update Task
+    const updatedTask = await Taskmodel.findOneAndUpdate(
+      { _id: id, user_id: decode.id }, // Ensures user can update only his task
+      {
+        Task_Tittle,
+        Task_description,
+        Task_Satut,
+      },
+      { new: true } // Return updated document
+    );
+
+    if (!updatedTask) {
+      return NextResponse.json(
+        { message: "Task not found or unauthorized" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      { message: "Task Updated Successfully", data: updatedTask },
+      { status: 200 }
+    );
+
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Update Failed", error: error.message },
+      { status: 500 }
+    );
+  }
+};
