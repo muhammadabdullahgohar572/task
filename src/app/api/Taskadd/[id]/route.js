@@ -57,37 +57,30 @@ export const DELETE = async (req, { params }) => {
   }
 };
 
-
-
 export const PUT = async (req, { params }) => {
   try {
     await Db_connection();
 
-    // ✅ Extract Task ID from URL
     const { id } = params;
 
-    // ✅ Get Token from Cookies
     const token = req.cookies().get("authtoken")?.value;
 
     if (!token) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    // ✅ Verify Token
     const decode = jwt.verify(token, "Abdullah");
 
-    // ✅ Get Request Body
     const { Task_Tittle, Task_description, Task_Satut } = await req.json();
 
-    // ✅ Update Task
     const updatedTask = await Taskmodel.findOneAndUpdate(
-      { _id: id, user_id: decode.id }, // Ensures user can update only his task
+      { _id: id, user_id: decode.id },
       {
         Task_Tittle,
         Task_description,
         Task_Satut,
       },
-      { new: true } // Return updated document
+      { new: true }
     );
 
     if (!updatedTask) {
@@ -101,7 +94,6 @@ export const PUT = async (req, { params }) => {
       { message: "Task Updated Successfully", data: updatedTask },
       { status: 200 }
     );
-
   } catch (error) {
     return NextResponse.json(
       { message: "Update Failed", error: error.message },

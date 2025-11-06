@@ -12,7 +12,7 @@ export const POST = async (req, res) => {
 
     const jwtverify = jwt.verify(cookiesfind, "Abdullah");
 
-    const { user_iD, Task_Tittle, Task_description, Task_Satut } =await req.json();
+    const { Task_Tittle, Task_description, Task_Satut } = await req.json();
 
     const taskadd = new Taskmodel({
       user_iD: jwtverify._id,
@@ -21,6 +21,8 @@ export const POST = async (req, res) => {
       Task_Satut,
     });
     const Tasksave = await taskadd.save();
+
+    console.log(taskadd);
     return NextResponse.json(Tasksave, {
       message: "Task sucessfully Save",
     });

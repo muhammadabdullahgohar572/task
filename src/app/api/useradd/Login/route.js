@@ -2,9 +2,11 @@ import { UserModel } from "@/app/model/userModel";
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import { Db_connection } from "@/app/libs/Db_connection";
 
 export const POST = async (req, res) => {
   try {
+    await Db_connection()
     const { user_Email, user_password } = await req.json();
 
     const findemail = await UserModel.findOne({ user_Email });

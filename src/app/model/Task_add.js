@@ -2,7 +2,7 @@
 import mongoose from "mongoose"
 
 const Task_addschme=mongoose.Schema({
-    user_iD:mongoose.Types.ObjectId,
+     user_iD: { type: mongoose.Schema.Types.ObjectId,  required: true },
     Task_Tittle:{
         type:String,
         required:true,
