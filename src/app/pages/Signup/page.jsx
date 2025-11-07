@@ -46,9 +46,11 @@ const Signup = () => {
           autoClose: 5000,
           theme: "dark",
         });
-        route.push("/pages/Login");
+        setTimeout(()=>{
+          route.push("/pages/Login");
+        },1000)
       } else {
-        toast.success(data.message, {
+        toast.error(data, {
           position: "top-center",
           autoClose: 5000,
           theme: "dark",

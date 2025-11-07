@@ -8,21 +8,22 @@ export const POST = async (req, res) => {
   try {
     await Db_connection();
 
-    const cookiesfind = req.cookies.get("authtoken")?.value;
+    const findcookies = req.cookies.get("authtoken")?.value;
+    if (!findcookies) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
 
-    const jwtverify = jwt.verify(cookiesfind, "Abdullah");
-
+    const tokendecode = jwt.verify(findcookies, "Abdullah");
+    const userId = tokendecode._id;
     const { Task_Tittle, Task_description, Task_Satut } = await req.json();
 
-    const taskadd = new Taskmodel({
-      user_iD: jwtverify._id,
+    const datasend = new Taskmodel({
+      user_iD: userId,
       Task_Tittle,
       Task_description,
       Task_Satut,
     });
-    const Tasksave = await taskadd.save();
-
-    console.log(taskadd);
+    const Tasksave = await datasend.save();
     return NextResponse.json(Tasksave, {
       message: "Task sucessfully Save",
     });

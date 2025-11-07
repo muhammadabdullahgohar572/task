@@ -36,7 +36,7 @@ const AddTask = () => {
       if (res.success) {
         toast.success("Task Added Successfully");
         setTimeout(() => {
-          router.push("/viewtask");
+          router.push("/");
         }, 800);
       } else {
         toast.error(res.message);
