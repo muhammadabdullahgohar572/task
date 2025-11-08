@@ -18,9 +18,11 @@ export const Navbar = () => {
       </div>
 
       <ul className="flex gap-8 text-gray-700 font-medium text-lg">
+        <Link href={"/pages/showpages"}>
         <li className="flex items-center gap-2 hover:text-blue-600 cursor-pointer transition">
           <LayoutList size={20} /> Show Tasks
         </li>
+        </Link>
 
         <Link href={"/pages/Add_Task"}>
           <li className="flex items-center gap-2 hover:text-blue-600 cursor-pointer transition">

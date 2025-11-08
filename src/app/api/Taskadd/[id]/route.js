@@ -9,7 +9,7 @@ export const GET = async (req, { params }) => {
 
     const { id } = params;
 
-    const finddata = await Taskmodel.find({ user_id: id });
+    const finddata = await Taskmodel.find({ user_iD: id });
 
     if (!finddata || finddata.length === 0) {
       return NextResponse.json(
@@ -74,7 +74,7 @@ export const PUT = async (req, { params }) => {
     const { Task_Tittle, Task_description, Task_Satut } = await req.json();
 
     const updatedTask = await Taskmodel.findOneAndUpdate(
-      { _id: id, user_id: decode.id },
+      { _id: id, user_iD: decode.id },
       {
         Task_Tittle,
         Task_description,
