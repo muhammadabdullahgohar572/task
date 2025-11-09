@@ -34,7 +34,7 @@ export const DELETE = async (req, { params }) => {
   try {
     await Db_connection();
 
-  const resolvedParams = await params; // ✅ unwrap params
+    const resolvedParams = await params; // ✅ unwrap params
     const { id } = resolvedParams;
 
     const finddata = await Taskmodel.findByIdAndDelete(id);
@@ -61,21 +61,12 @@ export const DELETE = async (req, { params }) => {
 export const PUT = async (req, { params }) => {
   try {
     await Db_connection();
-
-    const { id } = params;
-
-    const token = req.cookies().get("authtoken")?.value;
-
-    if (!token) {
-      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-    }
-
-    const decode = jwt.verify(token, "Abdullah");
+    const {id} = params.id;
 
     const { Task_Tittle, Task_description, Task_Satut } = await req.json();
 
-    const updatedTask = await Taskmodel.findOneAndUpdate(
-      { _id: id, user_iD: decode.id },
+    const updatedTask = await Taskmodel.findByIdAndUpdate(
+      {id},
       {
         Task_Tittle,
         Task_description,
@@ -84,6 +75,7 @@ export const PUT = async (req, { params }) => {
       { new: true }
     );
 
+    console.log(updatedTask);
     if (!updatedTask) {
       return NextResponse.json(
         { message: "Task not found or unauthorized" },

@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 
 const ShowTask = () => {
@@ -21,7 +22,7 @@ const ShowTask = () => {
       await fetch(`/api/Taskadd/${_id}`, {
         method: "DELETE",
       });
-      fetchTasks(); 
+      fetchTasks();
     } catch (error) {
       console.log(error);
     }
@@ -52,9 +53,11 @@ const ShowTask = () => {
               <td className="border p-2">{item.Task_description}</td>
               <td className="border p-2">{item.Task_Satut}</td>
               <td className="border p-2 flex gap-2">
-                <button className="bg-blue-500 text-white px-3 py-1 rounded">
-                  Edit
-                </button>
+                <Link href={`/pages/edit/${item._id}`}>
+                  <button className="bg-blue-500 text-white px-3 py-1 rounded">
+                    Edit
+                  </button>
+                </Link>
 
                 <button
                   onClick={() => handleDelete(item._id)}

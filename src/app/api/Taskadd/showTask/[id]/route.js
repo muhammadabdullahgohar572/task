@@ -6,12 +6,12 @@ export const GET = async (req, { params }) => {
   try {
     await Db_connection();
 
-    
-    const { user_iD } = params;
+    const revo=await params
+    const { id } = revo;
 
-    console.log(user_iD);
+  
 
-    const finddata = await Taskmodel.find(user_iD);
+    const finddata = await Taskmodel.findOne({_id:id});
 
     if (!finddata || finddata.length === 0) {
       return NextResponse.json(
