@@ -1,0 +1,30 @@
+"use client";
+
+import { contextcode } from "@/app/context/contextfile";
+import { useContext, useEffect, useState } from "react";
+
+const ShowTask = () => {
+  const [data, setdata] = useState([]);
+  const usecontext = useContext(contextcode);
+
+  const apicall = async () => {
+    try {
+      const apicall = await fetch(`/api/Taskadd/showTask/${usecontext._id}`);
+      const apiconvertjosn = await apicall.json();
+      setdata(apiconvertjosn);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (usecontext && usecontext._id) {  // ✅ Null safe condition
+      apicall();
+    }
+  }, [usecontext]);
+
+  console.log(data);
+  return <></>;
+};
+
+export default ShowTask;

@@ -1,9 +1,8 @@
 import { NextResponse } from "next/server";
-
 import jwt from "jsonwebtoken";
 import { Db_connection } from "@/app/libs/Db_connection";
 import { Taskmodel } from "@/app/model/Task_add";
-import { cookies } from "next/headers";
+
 
 export const POST = async (req, res) => {
   try {
@@ -35,7 +34,6 @@ export const POST = async (req, res) => {
     });
   }
 };
-
 
 export const GET = async (req) => {
   try {
@@ -69,4 +67,3 @@ export const GET = async (req) => {
     );
   }
 };
-;
