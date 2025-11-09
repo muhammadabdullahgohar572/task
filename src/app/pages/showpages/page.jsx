@@ -21,7 +21,7 @@ const ShowTask = () => {
       await fetch(`/api/Taskadd/${_id}`, {
         method: "DELETE",
       });
-      fetchTasks(); // Refresh after delete
+      fetchTasks(); 
     } catch (error) {
       console.log(error);
     }

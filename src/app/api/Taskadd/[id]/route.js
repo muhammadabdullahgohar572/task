@@ -34,11 +34,12 @@ export const DELETE = async (req, { params }) => {
   try {
     await Db_connection();
 
-    const { id } = params;
+  const resolvedParams = await params; // ✅ unwrap params
+    const { id } = resolvedParams;
 
-    const finddata = await Taskmodel.findOneAndDelete({ user_id: id });
+    const finddata = await Taskmodel.findByIdAndDelete(id);
 
-    if (!finddata || finddata.length === 0) {
+    if (!finddata) {
       return NextResponse.json(
         { message: "No task found with this id." },
         { status: 404 }
