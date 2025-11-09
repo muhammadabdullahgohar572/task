@@ -2,8 +2,8 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+
 const Login = () => {
   const route = useRouter();
   const [loginData, setLoginData] = useState({
@@ -39,9 +39,9 @@ const Login = () => {
           position: "top-center",
           theme: "dark",
         });
-        setTimeout(() => {
+     
           route.push("/");
-        }, 1000);
+      
       } else {
         toast.error(apires.message, {
           position: "top-center",
@@ -100,7 +100,7 @@ const Login = () => {
           </button>
         </form>
       </div>
-      <ToastContainer />
+  
     </>
   );
 };

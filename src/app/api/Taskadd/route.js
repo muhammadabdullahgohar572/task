@@ -4,7 +4,7 @@ import { Db_connection } from "@/app/libs/Db_connection";
 import { Taskmodel } from "@/app/model/Task_add";
 
 
-export const POST = async (req, res) => {
+export const POST = async (req) => {
   try {
     await Db_connection();
 
@@ -15,6 +15,7 @@ export const POST = async (req, res) => {
 
     const tokendecode = jwt.verify(findcookies, "Abdullah");
     const userId = tokendecode._id;
+
     const { Task_Tittle, Task_description, Task_Satut } = await req.json();
 
     const datasend = new Taskmodel({
@@ -23,15 +24,19 @@ export const POST = async (req, res) => {
       Task_description,
       Task_Satut,
     });
+
     const Tasksave = await datasend.save();
-    return NextResponse.json(Tasksave, {
-      message: "Task sucessfully Save",
-    });
+
+    return NextResponse.json(
+      { message: "Task successfully saved", data: Tasksave },
+      { status: 200 }
+    );
+
   } catch (error) {
-    return NextResponse.json({
-      error: error.message,
-      message: "Fail to add_Task",
-    });
+    return NextResponse.json(
+      { error: error.message, message: "Fail to add task" },
+      { status: 500 }
+    );
   }
 };
 

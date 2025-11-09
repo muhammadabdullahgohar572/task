@@ -18,11 +18,14 @@ const AddTask = () => {
   };
 
   const handleSubmit = async () => {
-    try {
-      if (!taskData.Task_Tittle || !taskData.Task_description) {
-        return toast.error("Please Fill All Required Fields");
-      }
 
+    
+    if (taskData.Task_Tittle === "" || taskData.Task_description === "") {
+      return toast.error("Please Fill All Required Fields");  alert("Please Fill All Required Fields")
+    
+    }
+
+    try {
       const apicall = await fetch("/api/Taskadd", {
         method: "POST",
         headers: {
@@ -33,8 +36,15 @@ const AddTask = () => {
 
       const res = await apicall.json();
 
-      if (res.success) {
+      
+      if (apicall.status === 200) {
         toast.success("Task Added Successfully");
+        setTaskData({
+          Task_Tittle: "",
+          Task_description: "",
+          Task_Satut: "Pending",
+        });
+
         setTimeout(() => {
           router.push("/");
         }, 800);
