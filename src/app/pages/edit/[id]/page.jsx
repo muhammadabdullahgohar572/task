@@ -16,7 +16,7 @@ const EditTask = () => {
   };
 
   const params = useParams();
-  const id = decodeURIComponent(params.id);
+  const id = params.id
   const apicall = async () => {
     try {
       const apicallurl = await fetch(`/api/Taskadd/showTask/${id}`);
@@ -41,7 +41,7 @@ const EditTask = () => {
         body: JSON.stringify(taskData),
       });
       const apiconvert=await apicall.json();
-    //   route.push("/")
+      route.push("/")
     } catch (error) {
       console.log(error);
     }
