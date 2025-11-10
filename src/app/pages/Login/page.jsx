@@ -40,7 +40,8 @@ const Login = () => {
           theme: "dark",
         });
      
-          route.push("/");
+     window.location.href = "/";
+
       
       } else {
         toast.error(apires.message, {

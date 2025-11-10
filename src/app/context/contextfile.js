@@ -4,7 +4,7 @@ import { createContext, useEffect, useState } from "react";
 export const contextcode = createContext();
 
 const Contextprodier = ({ children }) => {
-  const [UserData, setuser] = useState();
+  const [UserData, setuser] = useState(null);
 
   const apicall = async () => {
     try {
@@ -19,7 +19,7 @@ const Contextprodier = ({ children }) => {
   useEffect(() => {
     apicall();
   }, []);
-  return <contextcode.Provider value={UserData}>{children}</contextcode.Provider>;
+  return <contextcode.Provider value={{UserData,setuser}}>{children}</contextcode.Provider>;
 };
 
 export default Contextprodier;
