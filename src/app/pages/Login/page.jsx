@@ -39,10 +39,8 @@ const Login = () => {
           position: "top-center",
           theme: "dark",
         });
-     
-     window.location.href = "/";
 
-      
+        window.location.href = "/";
       } else {
         toast.error(apires.message, {
           position: "top-center",
@@ -101,7 +99,6 @@ const Login = () => {
           </button>
         </form>
       </div>
-  
     </>
   );
 };

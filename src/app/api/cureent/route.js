@@ -5,12 +5,15 @@ import { UserModel } from "@/app/model/userModel";
 export const GET = async (request) => {
   try {
     const authtoken = request.cookies.get("authtoken")?.value;
+    if (!authtoken) {
+      return NextResponse.json({ user: null });
+    }
+
     const decodetoken = jwt.verify(authtoken, "Abdullah");
-    const findid = await UserModel.findById(decodetoken._id);
-    return NextResponse.json(findid);
+    const findid = await UserModel.findById(decodetoken._id)
+
+    return NextResponse.json({ user: findid });
   } catch (error) {
-    return NextResponse.json({
-      error: error.message,
-    });
+    return NextResponse.json({ user: null });
   }
 };

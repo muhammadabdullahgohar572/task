@@ -41,7 +41,7 @@ export const Navbar = () => {
       <div className="flex gap-4">
         {UserData ? (
           <>
-            <span>{UserData.user_name}</span>
+            <span>{UserData.user.user_name}</span>
             <button
               onClick={logout}
               className="flex items-center gap-2 px-5 py-2 rounded-lg bg-red-500 text-white hover:bg-red-600 transition duration-200"

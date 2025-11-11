@@ -2,7 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "./components/Navbar";
 import Contextprodier from "./context/contextfile";
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,11 +26,10 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Contextprodier>
-
-        <Navbar/>
+          <Navbar />
+          {children}
         </Contextprodier>
-        {children}
-        <ToastContainer/>
+        <ToastContainer />
       </body>
     </html>
   );
